@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>选择器</title>
+    <style>
+        .ul-1 > li {
+            color: deepskyblue;
+        }
+
+        .ul-1 ol > li {
+            color: black;
+        }
+
+        p + p {
+            color: red;
+        }
+        h3 ~ h3 {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+
+    <ul class="ul-1">
+        <li>蔬菜</li>
+        <li>水果
+            <ol>
+                <li>香蕉</li>
+                <li>菠萝</li>
+            </ol>
+        </li>
+        <li>饮品</li>
+    </ul>
+    <hr/>
+    <ul class="ul-2">
+        <li>蔬菜</li>
+        <li>水果</li>
+        <li>饮品</li>
+    </ul>
+    <p>段落</p>
+    <p>段落</p>
+    <p>段落</p>
+
+    <h3>标题</h3>
+    <h3>标题</h3>
+    <h3>标题</h3>
+</body>
+</html>

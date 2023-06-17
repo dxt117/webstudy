@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>弹性盒子模型</title>
+    <style>
+        .container {
+            display: flex;
+            width: 600px;
+            height: 600px;
+            background-color: khaki;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box-1 {
+            width: 100px;
+            flex: 2;
+            background-color: red;
+        }
+
+        .box-2 {
+            width: 100px;
+            flex: 2;
+            background-color: green;
+        }
+
+        .box-3 {
+            width: 100px;
+            flex: 1;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box-1"></div>
+        <div class="box-2"></div>
+        <div class="box-3"></div>
+    </div>
+</body>
+</html>
