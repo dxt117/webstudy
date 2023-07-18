@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Async</title>
+</head>
+<body>
+    <script>
+        // const r = new Promise(function (resolve, reject) {
+        //
+        // });
+        function timeout(ms, value) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log(value)
+                    resolve();
+                }, ms);
+            });
+        }
+
+
+        async function print(ms, value) {
+            await timeout(ms, value);
+            console.log("JavaScript")
+        }
+
+        print(100, "Hello")
+
+    </script>
+</body>
+</html>

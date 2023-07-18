@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类</title>
+</head>
+<body>
+    <script>
+        // ES5  类写法
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        Person.prototype.getName = function () {
+            return this.name
+        };
+
+        let person = new Person("117", 19);
+        console.log(person.getName());
+
+        //ES6  类写法
+        class Dog {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+            toString() {
+                return "name:" + this.name + "," + "age:" + this.age
+            }
+        }
+
+        let dog = new Dog("x", 5);
+        console.log(dog.toString());
+    </script>
+</body>
+</html>

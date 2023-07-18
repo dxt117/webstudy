@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>html事件</title>
+</head>
+<body>
+    <!--HTML事件-->
+    <button onclick="clickHandle()">按钮</button>
+    <!--DOM0级事件-->
+    <button id="dom0">按钮</button>
+    <!--DOM2级事件-->
+    <button id="dom2">按钮</button>
+    <script>
+        // HTML事件 与html耦合
+        function clickHandle() {
+            console.log("点击了按钮");
+        }
+
+        // DOM0级事件 多个事件会被覆盖
+        let dom0 = document.getElementById("dom0");
+        dom0.onclick = function () {
+            console.log("点击了按钮");
+        }
+
+        // DOM2级事件 多个事件不会被覆盖
+        let dom2 = document.getElementById("dom2");
+        dom2.addEventListener("click", function () {
+            console.log("点击了1")
+        });
+        dom2.addEventListener("click", function () {
+            console.log("点击了2")
+        });
+    </script>
+</body>
+</html>

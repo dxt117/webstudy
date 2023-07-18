@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise对象</title>
+</head>
+<body>
+    <div id="box"></div>
+
+
+    <script>
+        let box = document.getElementById("box")
+
+        function loadImageAsync(url) {
+            return new Promise(function (resolve, reject) {
+                const image = new Image();
+                image.src = url;
+                image.onload = function () {
+                    resolve(image)
+                };
+                image.onerror = function () {
+                    reject(new Error("Could not load image at" + url));
+                }
+            });
+        }
+
+        const promise = loadImageAsync("http://iwenwiki.com/api/musicimg/2.png");
+        promise.then(function (data) {
+            //成功
+            box.appendChild(data)
+        }, function (error) {
+            //失败
+            box.innerHTML = "加载失败";
+            console.log(error)
+        });
+    </script>
+
+</body>
+</html>
