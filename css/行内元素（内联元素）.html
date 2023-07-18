@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>行内元素（内联元素）</title>
+    <style>
+        /*宽和高不起作用，默认宽高是他本身内容的宽高*/
+        /*行内元素只能容纳文本或者其他行内元素*/
+        span {
+            width: 100px;
+            height: 100px;
+            background-color: #8cd0f0;
+        }
+    </style>
+</head>
+<body>
+    <span>xxx</span> <strong>品如的衣服</strong>
+    <span>xxx</span> <strong>品如的衣服</strong>
+    <!--链接里不能再套链接-->
+    <!--特殊情况a标签里可以放块级元素，但是需要给a转换以下块级模式最安全-->
+    <a href="#">链接</a>
+    <a href="#">链接</a>
+</body>
+</html>
