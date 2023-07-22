@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>权重叠加</title>
+    <style>
+        /*权重虽然会叠加但不会进位*/
+        /*复合选择器有权重叠加问题*/
+        /* ul li 权重 0 0 0 1 + 0 0 0 1 = 0 0 0 2 */
+        ul li {
+            color: #00fc76;
+        }
+
+        /* li 权重 0 0 0 1 */
+        li {
+            color: #509EFC;
+        }
+
+        /* .nav li 权重 0 0 1 0 + 0 0 0 1 = 0 0 1 0*/
+        .nav li {
+            color: #FF9D00;
+        }
+
+
+        .ol li{
+            color: pink;
+        }
+        .ol .li {
+            color: cadetblue;
+        }
+
+    </style>
+</head>
+<body>
+    <ul class="nav">
+        <li>猪蹄儿</li>
+        <li>鸭脖儿</li>
+        <li>猪尾巴</li>
+    </ul>
+    <ol class="ol">
+        <li class="li">1</li>
+        <li>2</li>
+        <li>3</li>
+    </ol>
+</body>
+</html>

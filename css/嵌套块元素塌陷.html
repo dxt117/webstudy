@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>嵌套块元素塌陷</title>
+    <style>
+        .f {
+            width: 400px;
+            height: 400px;
+            background: #509EFC;
+            margin-top: 50px;
+            overflow: hidden;
+        }
+        .s {
+            width: 200px;
+            height: 200px;
+            background: mediumpurple;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="f">
+        <div class="s">
+        </div>
+    </div>
+</body>
+</html>
