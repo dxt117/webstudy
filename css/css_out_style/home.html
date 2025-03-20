@@ -2,13 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>首页</title>
     <link rel="stylesheet" href="./public.css">
 </head>
 <body>
-    <h3>首页</h3>
-    <a href="./product.html">产品</a>
+<h3>首页</h3>
+<a href="./product.html" target="_blank">产品</a>
+<p>
+    <a id="click">点我</a>
+</p>
+<script type="text/javascript">
+    const click = document.getElementById("click");
+    function test(event) {
+        let text = prompt("请输入内容");
+        // 将当前标签内的内容更新
+        event.target.innerHTML = text.valueOf();
+    }
+
+    click.addEventListener("click", test);
+</script>
 </body>
 </html>
