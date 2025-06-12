@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>CSS优先级</title>
@@ -8,7 +9,7 @@
         !important > style > #div > .div > div > *
         不论父元素权重有多高，子元素继承后都为0
         */
-        *{
+        * {
             margin: 0;
             padding: 0;
             color: #6690FF;
@@ -17,17 +18,21 @@
         div {
             color: #117911;
         }
+
         .div {
-            color: #509EFC!important;
+            color: #509EFC !important;
         }
+
         #div {
             color: #FF9D00;
         }
-        p{
+
+        p {
             color: #2bae85;
         }
     </style>
 </head>
+
 <body>
     <div class="div" id="div" style="color: #FFE6D4">
         内容文字
@@ -36,4 +41,5 @@
         </p>
     </div>
 </body>
+
 </html>
