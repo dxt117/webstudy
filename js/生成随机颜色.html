@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成随机颜色</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        main {
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .container {
+            width: 200px;
+            height: 200px;
+            border: 3px solid #24a7c4;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <button id="btn">生成随机颜色</button>
+        <div class="container"></div>
+    </main>
+    <script>
+        let btn = document.getElementById("btn");
+        let container = document.querySelector(".container");
+
+        // btn.addEventListener("click", function () {
+        //     let r = Math.floor(Math.random() * 256);
+        //     let g = Math.floor(Math.random() * 256);
+        //     let b = Math.floor(Math.random() * 256);
+        //     container.style.backgroundColor = `rgb(${r},${g},${b})`;
+        // });
+
+        let cS = '#';
+        const cArr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+        btn.addEventListener("click", function () {
+            const randomHex = Array.from({ length: 6 }, () => cArr[Math.floor(Math.random() * cArr.length)]).join('');
+            const cS = `#${randomHex}`;
+            container.style.backgroundColor = cS;
+        });
+
+
+    </script>
+</body>
+
+</html>

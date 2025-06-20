@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试案例</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .box-hd {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .box-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            /* display: flex; */
+            display: grid;
+            /* 自动填充列，固定列宽 238px，列间距 20px */
+            grid-template-columns: repeat(auto-fill, 238px);
+            justify-content:space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .box-list li {
+              /* 固定宽度 */
+            width: 238px; 
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+
+        .box-list li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .box-list img {
+            height: 160px;
+            /* object-fit: cover; */
+            display: block;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <div class="box-hd">标题</div>
+            <div class="box-list">
+                <ul class="clearfix">
+                    <script>
+                        (function () {
+                            let data = [
+                                { "src": "../css/images/206359.jpg", "title": "标题1", "desc": "描述1" },
+                                { "src": "../css/images/206359.jpg", "title": "标题2", "desc": "描述2" },
+                                { "src": "../css/images/206359.jpg", "title": "标题3", "desc": "描述3" },
+                                { "src": "../css/images/206359.jpg", "title": "标题4", "desc": "描述4" },
+                                { "src": "../css/images/206359.jpg", "title": "标题5", "desc": "描述5" },
+                                { "src": "../css/images/206359.jpg", "title": "标题6", "desc": "描述6" },
+                                { "src": "../css/images/206359.jpg", "title": "标题7", "desc": "描述7" },
+                                { "src": "../css/images/206359.jpg", "title": "标题8", "desc": "描述8" },
+                                { "src": "../css/images/206359.jpg", "title": "标题9", "desc": "描述9" },
+                                { "src": "../css/images/206359.jpg", "title": "标题10", "desc": "描述10" }
+                            ];
+                            data.forEach(function (item, index) {
+                                document.querySelector(".clearfix").innerHTML += `
+                                <li>
+                                    <a href="#">
+                                        <img src="${item.src}" alt="图片">
+                                        <h4>${item.title}</h4>
+                                        <div class="info">
+                                            <p>${item.desc}</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                `;
+                            });
+                        })();
+                    </script>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
