@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随机抽奖案例</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <strong>抽奖</strong>
+        <h1>一等奖：<span id="one">???</span></h1>
+        <h3>二等奖：<span id="two">???</span></h3>
+        <h5>三等奖：<span id="three">???</span></h5>
+    </div>
+    <script>
+        const personArr = ['张三', '李四', '王五', '赵六', '周杰伦', '刘德华', '周星驰', '张学友']
+        function lotterie(selector, arr) {
+            const random = Math.floor(Math.random() * arr.length)
+            const element = document.querySelector(selector)
+            element.innerHTML = arr[random]
+            arr.splice(random, 1)
+        }
+        lotterie('#one', personArr)
+        lotterie('#two', personArr)
+        lotterie('#three', personArr)
+    </script>
+</body>
+
+</html>

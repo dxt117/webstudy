@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>获取DOM元素</title>
+</head>
+
+<body>
+    <div class="box">123</div>
+    <div class="box">abc</div>
+    <p id="id">导航栏</p>
+    <ul>
+        <li>测试1</li>
+        <li>测试2</li>
+        <li>测试3</li>
+    </ul>
+    <script>
+        // 获取元素
+        // 1.获取匹配的第一个元素
+        // const box = document.querySelector('div')
+        // const box = document.querySelector('.box')
+        // console.log(box)
+        // const nav = document.querySelector('#nav')
+        // console.log(nav)
+        // 获取第一个li
+        // const li = document.querySelector('ul li:first-child')
+        // console.log(li.innerHTML)
+        // // 获取最后一个li
+        // const li2 = document.querySelector('ul li:last-child')
+        // console.log(li2.innerHTML)
+        // // 获取ul中的所有li
+        // const lis = document.querySelectorAll('ul li')
+        // console.log(lis)
+        // for (let i = 0; i < lis.length; i++) {
+        //     console.log(lis[i].innerHTML)
+        // }
+        // 通过getElementById获取元素
+        const id = document.getElementById('id')
+        console.log(id)
+        // 通过getElementsByClassName获取元素
+        const boxs = document.getElementsByClassName('box')
+        console.log(boxs)
+        // 通过getElementsByTagName获取元素
+        const ul = document.getElementsByTagName('ul')
+        console.log(ul)
+    
+    </script>
+</body>
+
+</html>
