@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件循环</title>
+</head>
+
+<body>
+    <h1>事件循环</h1>
+    <p>事件循环是一种机制，用于处理异步任务和事件。它是浏览器和Node.js的核心概念，用于管理和执行JavaScript代码中的异步操作。</p>
+    <h2>事件循环的基本概念</h2>
+    <p>事件循环由以下几个主要组件组成：</p>
+    <ul>
+        <li>调用栈（Call Stack）：用于执行同步代码。</li>
+        <li>任务队列（Task Queue）：用于存储异步任务。</li>
+        <li>事件循环（Event Loop）：负责监控调用栈和任务队列，当调用栈为空时，从任务队列中取出任务并放入调用栈中执行。</li>
+    </ul>
+</body>
+<script>
+    // 模拟一个异步任务
+    function asyncTask() {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log('异步任务完成');
+                resolve();
+            }, 1000);
+        });
+    }
+
+    // 模拟一个同步任务
+    function syncTask() {
+        console.log('同步任务开始');
+        console.log('同步任务结束');
+    }
+    // 调用异步任务
+    asyncTask().then(() => {
+        console.log('异步任务执行完成');
+    });
+    // 调用同步任务
+    syncTask();
+
+    // 调用异步任务
+    asyncTask().then(() => {
+        console.log('异步任务执行完成');
+    });
+</script>
+</body>
+
+</html>

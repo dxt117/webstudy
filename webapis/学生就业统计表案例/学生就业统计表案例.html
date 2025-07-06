@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生就业统计表</title>
+    <link rel="stylesheet" href="./iconfont/iconfont.css">
+    <link rel="stylesheet" href="css/index.css" />
+</head>
+
+<body>
+    <h1>学生就业统计表</h1>
+    <form class="info" autocomplete="off">
+        <input type="text" class="name" name="uname" placeholder="姓名" />
+        <input type="text" class="age" name="age" placeholder="年龄" />
+        <input type="text" class="salary" name="salary" placeholder="薪资" />
+        <select name="gender" class="gender">
+            <option value="男">男</option>
+            <option value="女">女</option>
+        </select>
+        <select name="city" class="city">
+            <option value="北京">北京</option>
+            <option value="上海">上海</option>
+            <option value="广州">广州</option>
+            <option value="深圳">深圳</option>
+            <option value="其他">其他</option>
+        </select>
+        <button class="add">
+            <i class="iconfont icon-tianjia"></i>添加
+        </button>
+    </form>
+    <div class="title">
+        共有数据<span>0</span>条
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+                <th>薪资</th>
+                <th>就业城市</th>
+                <th>录入时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+                <td>1</td>
+                <td>张三</td>
+                <td>18</td>
+                <td>男</td>
+                <td>15000</td>
+                <td>北京</td>
+                <td>2025/7/8 08:08:08</td>
+                <td>
+                    <a href="javascript:">
+                        <i class="iconfont icon-shanchu"></i>删除
+                    </a>
+                </td>
+            </tr> -->
+        </tbody>
+    </table>
+    <script>
+        // 从localStorage中获取数据
+        const initData = localStorage.getItem('stuData') || localStorage.setItem('stuData', JSON.stringify([]));
+        const stuData = JSON.parse(initData);
+        const countTitle = document.querySelector(".title span");
+        const tbody = document.querySelector("tbody");
+        function render() {
+            tbody.innerHTML = stuData.map((item, index) => {
+                return `
+                        <tr>
+                            <td>${item.stuID}</td>
+                            <td>${item.uname}</td>
+                            <td>${item.age}</td>
+                            <td>${item.gender}</td>
+                            <td>${item.salary}</td>
+                            <td>${item.city}</td>
+                            <td>${item.time}</td>
+                            <td>
+                                <a href="javascript:" data-id="${index}">
+                                    <i class="iconfont icon-shanchu"></i>删除
+                                </a>
+                            </td>
+                        </tr>
+                `
+            }).join('');
+            countTitle.innerHTML = stuData.length;
+        }
+        // 加载时显示数据
+        render();
+
+        // 添加数据
+        const addBtn = document.querySelector('.info');
+        const uname = document.querySelector('input[name="uname"]');
+        const age = document.querySelector('input[name="age"]');
+        const salary = document.querySelector('input[name="salary"]');
+        const gender = document.querySelector('select[name="gender"]');
+        const city = document.querySelector('select[name="city"]');
+        addBtn.addEventListener('submit', function (e) {
+            // 阻止默认提交
+            e.preventDefault();
+            if (!uname.value || !age.value || !salary.value) {
+                return alert('请填写完整信息');
+            }
+            // 数据验证通过，添加数据
+            stuData.push({
+                stuID: stuData.length ? stuData[stuData.length - 1].stuID + 1 : 1,
+                uname: uname.value,
+                age: age.value,
+                gender: gender.value,
+                salary: salary.value,
+                city: city.value,
+                time: new Date().toLocaleString()
+            });
+            localStorage.setItem('stuData', JSON.stringify(stuData));
+            this.reset();
+            render();
+        })
+        // 删除数据
+        tbody.addEventListener('click', function (e) {
+            if (e.target.tagName === 'A' && confirm('确定要删除吗？')) {
+                let index = e.target.dataset.id;
+                stuData.splice(index, 1);
+                localStorage.setItem('stuData', JSON.stringify(stuData));
+                render();
+            }
+        })
+
+        // })
+    </script>
+</body>
+
+</html>

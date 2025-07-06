@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实例化日期对象</title>
+</head>
+
+<body>
+    <script>
+        //实例化日期对象
+        var date1 = new Date();
+        console.log(date1.getTime);
+        //获取日期对象的年、月、日、时、分、秒、星期
+        console.log(date1.getFullYear());
+        console.log(date1.getMonth());
+        console.log(date1.getDate());
+        console.log(date1.getHours());
+        console.log(date1.getMinutes());
+        console.log(date1.getSeconds());
+        console.log(date1.getDay());
+        //指定时间
+        var date2 = new Date(2020, 10, 10, 10, 10, 10, 10);
+        var date3 = new Date("2025-08-08 10:10:10");
+        console.log(date2);
+        console.log(date3);
+        window.setInterval(test, 1000);
+        function test() {
+            var date4 = new Date();
+            console.log(date4.getTime());
+        }
+    </script>
+</body>
+
+</html>

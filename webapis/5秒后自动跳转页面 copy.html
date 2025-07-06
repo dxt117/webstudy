@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5秒后自动跳转页面</title>
+    <style>
+        span {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="http://baidu.com"></a>
+    <h1 class="h"></h1>
+    <script>
+        // 防抖函数
+        function debounce(func, delay) {
+            let timer;
+            return function (...args) {
+                const context = this;
+                if (timer) clearTimeout(timer);
+                // 存储定时器 ID
+                timer = setTimeout(() => {
+                    // 执行原函数并存储返回值
+                    const result = func.apply(context, args);
+                    timer = null;
+                    return result;
+                }, delay);
+
+                // 返回包含 cancel 方法的对象
+                return {
+                    cancel() {
+                        clearTimeout(timer);
+                    }
+                };
+            };
+        }
+
+        function jump(slc, ct, n) {
+            let count = ct;
+            const link = document.querySelector(slc)
+            // 处理元素不存在的情况
+            if (!link) {
+                console.error(`未找到选择器 ${slc} 对应的元素`);
+                return {
+                    cancelJump() { } // 返回空函数避免报错
+                };
+            }
+            link.innerHTML = `<span>${count}</span>秒后自动跳转`;
+            // 保存定时器引用
+            let intev = setInterval(() => {
+                console.log("intev", intev, n);
+                count--;
+                if (count <= 0) {
+                    clearInterval(intev); // 清除定时器
+                    link.innerHTML = '跳转中...';
+                    window.location.href = 'http://baidu.com';
+                    return;
+                }
+                link.innerHTML = `<span>${count}</span>秒后自动跳转`;
+            }, 1000);
+            // 取消跳转
+            return {
+                cancelJump() {
+                    clearInterval(intev);
+                    link.innerHTML = '取消跳转';
+                }
+            };
+        }
+
+        const deb = debounce(jump, 300);
+        const debouncedObj = deb(".h", 30, 1);
+        setTimeout(() => {
+            // 先取消防抖定时器
+            debouncedObj.cancel();
+            // 如果 jump 函数已经执行，获取 jump 函数返回的对象
+            if (debouncedObj.jumpResult) {
+                debouncedObj.jumpResult.cancelJump();
+            }
+        }, 3000);
+
+
+        // jumpObj.cancelJump();
+        // let j1 = jump("a[href]", 30);
+        // let j2 = jump(".h", 30);
+        // let st1 = setTimeout(() => {
+        //     j1.cancelJump();
+        // }, 5000);
+
+        // let st2 = setTimeout(() => {
+        //     j2.cancelJump();
+        // }, 10000);
+    </script>
+</body>
+
+</html>

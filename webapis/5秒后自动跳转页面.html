@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5秒后自动跳转页面</title>
+    <style>
+        span {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="http://baidu.com"></a>
+    <h1 class="h"></h1>
+    <script>
+        // 防抖函数
+        function debounce(func, delay) {
+            // 用于存储 setTimeout 返回的定时器 ID
+            let timer;
+            // 用于存储目标函数执行后返回的包含 cancelJump 方法的对象
+            let cancelJumpFn = null;
+
+            // 定义经过防抖处理后的函数
+            const deb = function (...args) {
+                // 保存当前函数的执行上下文
+                const context = this;
+                // 如果存在未执行的定时器，则清除该定时器
+                if (timer) clearTimeout(timer);
+                // 如果之前已经执行过目标函数，且返回的对象包含 cancelJump 方法，则调用该方法取消之前的操作
+                if (cancelJumpFn && typeof cancelJumpFn.cancelJump === 'function') {
+                    cancelJumpFn.cancelJump();
+                    cancelJumpFn = null;
+                }
+                // 设置一个新的定时器，在 delay 毫秒后执行目标函数
+                timer = setTimeout(() => {
+                    // 执行目标函数，并将返回的对象赋值给 cancelJumpFn
+                    cancelJumpFn = func.apply(context, args);
+                }, delay);
+            };
+
+            // 为经过防抖处理后的函数添加 cancel 方法，用于取消定时器和之前的操作
+            deb.cancel = function () {
+                // 如果存在未执行的定时器，则清除该定时器
+                if (timer) {
+                    clearTimeout(timer);
+                    timer = null;
+                }
+                // 如果之前已经执行过目标函数，且返回的对象包含 cancelJump 方法，则调用该方法取消之前的操作
+                if (cancelJumpFn && typeof cancelJumpFn.cancelJump === 'function') {
+                    cancelJumpFn.cancelJump();
+                    cancelJumpFn = null;
+                }
+            };
+            // 返回经过防抖处理后的函数
+            return deb;
+        }
+
+
+        // 使用方法
+        const debounced = debounce(jump, 300);
+        const result = debounced(".h", 10, 1);
+        result.cancel(); // 取消执行
+        function jump(slc, ct, n) {
+            let count = ct;
+            const link = document.querySelector(slc)
+            // 处理元素不存在的情况
+            if (!link) {
+                console.error(`未找到选择器 ${slc} 对应的元素`);
+                return {
+                    cancelJump() { } // 返回空函数避免报错
+                };
+            }
+            link.innerHTML = `<span>${count}</span>秒后自动跳转`;
+            // 保存定时器引用
+            let intev = setInterval(() => {
+                console.log("intev", intev, n);
+                count--;
+                if (count <= 0) {
+                    clearInterval(intev); // 清除定时器
+                    link.innerHTML = '跳转中...';
+                    window.location.href = 'http://baidu.com';
+                }
+                link.innerHTML = `<span>${count}</span>秒后自动跳转`;
+            }, 1000);
+            // 取消跳转
+            return {
+                cancelJump() {
+                    clearInterval(intev);
+                    link.innerHTML = '取消跳转';
+                }
+            };
+        }
+
+        const deb = debounce(jump, 300);
+        deb(".h", 10, 1);
+        deb(".h", 10, 2);
+        deb(".h", 10, 3);
+        deb(".h", 10, 4);
+        deb(".h", 10, 5);
+
+        setTimeout(() => {
+            deb(".h", 10, 6);
+        }, 5000);
+
+    </script>
+</body>
+
+</html>

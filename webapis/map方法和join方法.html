@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>map方法和join方法</title>
+</head>
+
+<body>
+    <script>
+        // map方法
+        let arr = [1, 2, 3, 4, 5]
+        let newArr = arr.map(function (item, index, arr) {
+            // console.log(item, index, arr)
+            return item * 2
+        })
+        console.log(newArr)
+
+        // join方法
+        let arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        let newArr1 = arr1.join('-')
+        console.log(newArr1)
+        console.log(typeof (newArr1))
+    </script>
+</body>
+
+</html>
