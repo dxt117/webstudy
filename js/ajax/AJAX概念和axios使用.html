@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AJAX概念和axios使用</title>
+  <style>
+    #province,
+    #city,
+    #county {
+      /* 固定宽度（根据实际需求调整） */
+      width: 150px;
+      /* 确保padding不增加总宽度 */
+      box-sizing: border-box;
+      /* 可选：添加适当内边距优化视觉 */
+      padding: 5px 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <p class="my-p">
+    <!-- 省份下拉框 -->
+    <select name="省份" id="province">
+      <option value="">请选择省份</option>
+    </select>
+
+    <!-- 城市下拉框（初始隐藏或禁用） -->
+    <select name="城市" id="city" disabled>
+      <option value="">请先选择省份</option>
+    </select>
+
+    <!-- 区县下拉框（初始隐藏或禁用） -->
+    <select name="地区" id="county" disabled>
+      <option value="">请先选择城市</option>
+    </select>
+  </p>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    const provinceSelect = document.querySelector('#province')
+    const citySelect = document.querySelector('#city')
+    const countySelect = document.querySelector('#county')
+    const API_CONFIG = {
+      province: 'http://hmajax.itheima.net/api/province',
+      city: 'http://hmajax.itheima.net/api/city',
+      area: 'http://hmajax.itheima.net/api/area'
+    };
+    const cache = {};
+
+    // 渲染下拉框的函数
+    function renderSelect(selectElement, data, placeholder) {
+      const options = data.map((item, index) => {
+        return `<option value="${index}">${item}</option>`;
+      }).join('');
+      selectElement.innerHTML = `<option value="">${placeholder}</option>${options}`;
+    }
+
+    // 获取数据的函数
+    function fetchData(url, params = {}) {
+      const cacheKey = `${url}-${JSON.stringify(params)}`;
+      if (cache[cacheKey]) {
+        return Promise.resolve(cache[cacheKey]);
+      }
+      return axios({ url, params })
+        .then(result => {
+          cache[cacheKey] = result.data.list;
+          return result.data.list;
+        })
+        .catch(error => {
+          console.error(`获取数据失败：`, error);
+          throw error;
+        });
+    }
+
+    // 初始化省份数据
+    fetchData(API_CONFIG.province)
+      .then(data => {
+        renderSelect(provinceSelect, data, '请选择省份');
+      })
+      .catch(() => {
+        provinceSelect.innerHTML = '<option value="">获取省份失败</option>';
+      });
+
+    // 监听下拉框的change事件
+    function handleSelectChange(currentSelect, nextSelect, nextNextSelect, apiUrl, paramsGenerator) {
+      currentSelect.addEventListener('change', function () {
+        const code = this.value;
+        if (!code) {
+          nextSelect.disabled = true;
+          nextSelect.innerHTML = `<option value="">请先选择${currentSelect.name}</option>`;
+          if (nextNextSelect) {
+            nextNextSelect.innerHTML = `<option value="">请先选择${nextSelect.name}</option>`;
+            nextNextSelect.disabled = true;
+          }
+          return;
+        }
+        nextSelect.disabled = true;
+        nextSelect.innerHTML = '<option value="">加载中...</option>';
+        const params = paramsGenerator();
+        fetchData(apiUrl, params)
+          .then(data => {
+            renderSelect(nextSelect, data, `请选择${nextSelect.name}`);
+            if (nextNextSelect) {
+              nextNextSelect.innerHTML = `<option value="">请先选择${nextSelect.name}</option>`;
+              nextNextSelect.disabled = true;
+            }
+            nextSelect.disabled = false;
+          })
+          .catch((err) => {
+            nextSelect.innerHTML = `<option value="">获取${nextSelect.name}失败</option>`;
+          });
+      });
+    }
+
+
+    // 监听省份下拉框的change事件
+    handleSelectChange(
+      provinceSelect,
+      citySelect,
+      countySelect,
+      API_CONFIG.city,
+      () => ({ pname: provinceSelect.selectedOptions[0].text })
+    );
+
+    // 监听城市选择框的change事件
+    handleSelectChange(
+      citySelect,
+      countySelect,
+      null,
+      API_CONFIG.area,
+      () => ({
+        pname: provinceSelect.selectedOptions[0].text,
+        cname: citySelect.selectedOptions[0].text
+      })
+    );
+  </script>
+</body>
+
+</html>
