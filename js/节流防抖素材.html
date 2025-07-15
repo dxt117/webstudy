@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    .box {
+      width: 500px;
+      height: 1800px;
+      background-color: #ccc;
+      color: #fff;
+      text-align: center;
+      font-size: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box"></div>
+  <script>
+    /**
+    * 节流函数：控制函数在指定时间间隔内最多执行一次
+    * @param {Function} func 需要节流的目标函数
+    * @param {number} wait 时间间隔（毫秒）
+    * @returns {Function} 节流处理后的函数
+    */
+    function throttle(func, wait) {
+      // 存储定时器标识，用于清除未执行的定时任务
+      let timeout;
+      // 记录上次函数执行的时间戳（初始为0，代表未执行过）
+      let lastExecTime = 0;
+
+      // 返回节流处理后的函数，支持接收任意参数
+      return function (...args) {
+        // 获取当前时间戳（毫秒）
+        const currentTime = Date.now();
+        // 计算距离上次执行后，距离下次可执行的剩余时间
+        // 公式：剩余时间 = 设定间隔 - (当前时间 - 上次执行时间)
+        const remaining = wait - (currentTime - lastExecTime);
+
+        // 场景1：距离上次执行已超过设定间隔，立即执行函数
+        if (remaining <= 0) {
+          // 若存在未执行的定时器，先清除以避免重复执行
+          if (timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+          }
+          // 执行目标函数，保持this上下文并传递参数
+          func.apply(this, args);
+          // 更新上次执行时间为当前时间
+          lastExecTime = currentTime;
+        }
+        // 场景2：距离上次执行未超过设定间隔，且未设置定时器时，延迟执行
+        else if (!timeout) {
+          // 设置定时器，等待剩余时间后执行函数
+          timeout = setTimeout(() => {
+            // 执行目标函数并传递参数
+            func.apply(this, args);
+            // 更新上次执行时间为定时器触发时的当前时间
+            lastExecTime = Date.now();
+            // 重置定时器标识，允许下次触发
+            timeout = null;
+          }, remaining);
+        }
+      };
+    }
+
+    // 使用示例
+    const throttledScroll = throttle(() => {
+      console.log('滚动事件被节流处理');
+    }, 500);
+
+    window.addEventListener('scroll', throttledScroll);
+
+  </script>
+</body>
+
+</html>
